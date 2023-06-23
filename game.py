@@ -33,3 +33,4 @@ def check_winner(player1,player2):
                     'spock': ['tie']}
              }
     return rules[player1][player2]
+
