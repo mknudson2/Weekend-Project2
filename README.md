@@ -1,2 +1,2 @@
 # Weekend-Project2
-Creating a Rock, Paper, Scissors game in Python with Benjamin Deitch and Michael Knudson
+Creating a Rock, Paper, Scissors game in Python with Benjamin Deitch, Michael Knudson, Sima Bozorg Chami. 
