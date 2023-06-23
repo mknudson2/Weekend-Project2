@@ -1,3 +1,4 @@
+
 import random
 
 reference = {
@@ -17,41 +18,41 @@ reference = {
      'help': 'help'
      }
 
-score = [0,1,2]
+score = [0,0,0]
 
 quit = False
 
 def check_winner(player1,player2):
     rules = {'rock':{
-                    'rock': ['tie'],
-                    'paper': ['lose'],
-                    'scissors': ['win'],
-                    'lizard': ['win'],
-                    'spock': ['lose']},
+                    'rock': ['tie', "Rock ties with rock."],
+                    'paper': ['lose', "Paper covers rock."],
+                    'scissors': ['win', "Rock crushes scissors"],
+                    'lizard': ['win', "Rock crushes lizard."],
+                    'spock': ['lose', "Spock disintegrates rock."]},
              'paper':{
-                    'rock': ['win'],
-                    'paper': ['tie'],
-                    'scissors': ['lose'],
-                    'lizard': ['lose'],
-                    'spock': ['win']},
+                    'rock': ['win', "Paper covers rock."],
+                    'paper': ['tie', "Paper ties with paper."],
+                    'scissors': ['lose', "Scissors cut paper."],
+                    'lizard': ['lose', "Lizard eats paper."],
+                    'spock': ['win', "Paper disproves Spock."]},
              'scissors':{
-                    'rock': ['lose'],
-                    'paper': ['win'],
-                    'scissors': ['tie'],
-                    'lizard': ['lose'],
-                    'spock': ['lose']},
+                    'rock': ['lose', "Rock crushes scissors."],
+                    'paper': ['win', "Scissors cut paper."],
+                    'scissors': ['tie', "Scissors tie with paper."],
+                    'lizard': ['lose', "Scissors decapitate lizard."],
+                    'spock': ['lose', "Spock crushes scissors."]},
              'lizard':{
-                    'rock': ['lose'],
-                    'paper': ['win'],
-                    'scissors': ['lose'],
-                    'lizard': ['tie'],
-                    'spock': ['win']},
+                    'rock': ['lose', "Rock crushes lizard."],
+                    'paper': ['win', "Lizard eats paper."],
+                    'scissors': ['lose', "Scissors decapitate lizard."],
+                    'lizard': ['tie', "Lizard ties with lizard."],
+                    'spock': ['win', "Lizard poisons Spock. "]},
              'spock': {
-                    'rock': ['win'],
-                    'paper': ['lose'],
-                    'scissors': ['win'],
-                    'lizard': ['lose'],
-                    'spock': ['tie']}
+                    'rock': ['win', "Spock disintegrates rock."],
+                    'paper': ['lose', "Paper disproves Spock."],
+                    'scissors': ['win', "Spock crushes scissors."],
+                    'lizard': ['lose', "Lizard poisons Spock. "],
+                    'spock': ['tie', "Spock ties with Spock."]}
              }
     return rules[player1][player2]
 
@@ -76,21 +77,25 @@ def update_score(score1):
         case 'tie':
             score[2] = score[2]+ 1
 
+def get_score():
+    return "Wins: {}, Losses: {}, Ties: {}".format(str(score[0]), str(score[1]), str(score[2]))
 def game_play():
     player_input = get_player_input()
     if player_input == 'quit':
        quit = True
-       pass
        return 'quit'
     computer_choice = get_computer_choice()
     game_check = check_winner(player_input, computer_choice)
     update_score(game_check[0])
-    print('End of Game')
+    print(get_score())
+    print(game_check[1])
+    print("Would you like to continue?")
     
 
 def driver():
-    while quit == False:
-       game_play()
+    while not quit: 
+      if  game_play() == "quit":
+          break;
     print('game end')
 
 
