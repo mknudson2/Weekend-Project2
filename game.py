@@ -3,6 +3,13 @@ import random
 from random import choice
 from random import randint
 import tkinter as tk
+from PIL import ImageTk, Image
+
+class Help_object:
+    def __init__(self, input1):
+       self.input1 = input1
+    
+help_me = Help_object("")
 
 reference = {
      'rock':"rock", 
@@ -107,34 +114,69 @@ window =tk.Tk()
 computer_frame =tk.Frame(window, width=300, height= 200)
 center_frame = tk.Frame(window, width=300, height=200)
 player_frame = tk.Frame(window, width=300, height= 200)
-input = ' '
+input1 = ' '
 window.geometry("800x500")
 window.title("Rock, Paper, Scissors")
-
+image_name= "rock.png"
 greeting = tk.Label(window, text = "Welcome, combatant!", font=('sans-serif, 20'))
 comp_label = tk.Label(computer_frame, text="Computer", padx= 100, pady=100)
 resolve = tk.Button(center_frame, text="Resolve")
 
-rock = tk.Radiobutton(player_frame, text="Rock", variable= input, value='rock')
-paper = tk.Radiobutton(player_frame, text="Paper", variable= input, value='paper')
-scissors = tk.Radiobutton(player_frame, text="Scissors", variable= input, value='scissors')
-lizard = tk.Radiobutton(player_frame, text="Lizard", variable= input, value='lizard')
-spock = tk.Radiobutton(player_frame, text="Spock", variable= input, value='spock')
-match input:
-    case "rock": 
-        if random.randint(1,10) == 10:
-                image_name = "therock.png"
-        else:
-                image_name = "rock.png"
-    case "scissors":
-        image_name = "scissors.png" 
-    case "paper":
-        image_name = "paper.png"
-    case "lizard":
-        image_name = "lizard.png"
-    case "spock":
-        image_name = "spock.png"
 
+
+
+#FUNCTIONS PLEASE WORK 
+
+def select_graphic():
+    print(help_me.input1)
+    match help_me.input1:
+        case "rock.png":
+            img2 = ImageTk.PhotoImage(Image.open("rock.png"))
+        case "paper.png":
+            img2 = ImageTk.PhotoImage(Image.open("paper.png"))
+        case "scissor.jpg":
+            img2 = ImageTk.PhotoImage(Image.open("scissor.jpg"))
+        case "lizard.png":
+            img2 = ImageTk.PhotoImage(Image.open("lizard.png"))
+        case "space.png":
+            img2 = ImageTk.PhotoImage(Image.open("space.png"))
+        case __:
+            img2 = ImageTk.PhotoImage(Image.open("lizard.png"))
+    player1_image.configure(image=img2)
+    player1_image.image = img2
+    
+
+def set_input_scissors(event):
+    help_me.input1 = "scissor.jpg"
+    print(help_me.input1)
+    select_graphic()
+def set_input_lizard(event):
+    help_me.input1 = "lizard.png" 
+    print(help_me.input1)
+    select_graphic()
+def set_input_spock(event):
+    help_me.input1 = "space.png" 
+    print(help_me.input1)
+    select_graphic()
+def set_input_rock(event):
+    help_me.input1 = "rock.png" 
+    print(help_me.input1)
+    select_graphic()
+def set_input_paper(event):
+    help_me.input1 = "paper.png"
+    print(help_me.input1)
+    select_graphic()
+rock = tk.Radiobutton(player_frame, text="Rock", variable= input1, value='rock')
+paper = tk.Radiobutton(player_frame, text="Paper", variable= input1, value='paper')
+scissors = tk.Radiobutton(player_frame, text="Scissors", variable= input1, value='scissors')
+lizard = tk.Radiobutton(player_frame, text="Lizard", variable= input1, value='lizard')
+spock = tk.Radiobutton(player_frame, text="Spock", variable= input1, value='spock')
+
+
+#Image declaration
+
+img = ImageTk.PhotoImage(Image.open(image_name))
+player1_image = tk.Label(window, image = img)
 # buttons={}
 
 # for row in range(5):
@@ -146,21 +188,26 @@ match input:
 #         buttons[row][col].grid(row=row, column=col)
         
 
-computer_frame.grid(column=0, row=0)
+computer_frame.grid(column=2, row=0)
 comp_label.grid(column= 0, row=2)
 
 center_frame.grid(column = 1, row = 0)
 resolve.grid(column=1, row=2, padx=40, sticky='nsew')
 
 player_frame.grid(column=2, row = 0)
-rock.grid(column=1, row=2)
-paper.grid(column=2, row=2)
-scissors.grid(column=3, row=2)
-lizard.grid(column=4, row=2)
-spock.grid(column=5, row=2)
+rock.grid(column=2, row=2)
+paper.grid(column=2, row=3)
+scissors.grid(column=2, row=4)
+lizard.grid(column=2, row=5)
+spock.grid(column=2, row=6)
+player1_image.grid(column=0,row=0)
 
 
-
+rock.bind('<Button-1>', set_input_rock)
+paper.bind('<Button-1>',set_input_paper)
+scissors.bind('<Button-1>', set_input_scissors)
+lizard.bind('<Button-1>', set_input_lizard )
+spock.bind('<Button-1>', set_input_spock)
 # greeting.pack()
 
 window.mainloop()
