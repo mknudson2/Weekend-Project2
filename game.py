@@ -131,7 +131,10 @@ def select_graphic():
     print(help_me.input1)
     match help_me.input1:
         case "rock.png":
-            img2 = ImageTk.PhotoImage(Image.open("rock.png"))
+            if random.randint(9) == 9:
+                img2 = ImageTk.PhotoImage(Image.open("rock.png"))
+            else: 
+                 img2 = ImageTk.PhotoImage(Image.open("therock.png"))
         case "paper.png":
             img2 = ImageTk.PhotoImage(Image.open("paper.png"))
         case "scissor.jpg":
