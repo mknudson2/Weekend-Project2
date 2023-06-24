@@ -133,16 +133,6 @@ match input:
         image_name = "lizard.png"
     case "spock":
         image_name = "spock.png"
-
-# buttons={}
-
-# for row in range(5):
-#     for col in range(5):
-#         button_text = ['rock', 'paper', 'scissors', 'lizard', 'spock'][row]
-#         buttons[row] = buttons.get(row, {})
-#         buttons[row][col] = tk.Button(window, text=button_text, padx=20, pady=10,
-#                                      command=lambda r=row, c=col: on_button_click(r, c))
-#         buttons[row][col].grid(row=row, column=col)
         
 
 computer_frame.grid(column=0, row=0)
