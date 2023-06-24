@@ -1,4 +1,7 @@
 import random
+from random import choice
+from random import randint
+import tkinter as tk
 
 reference = {
      'rock':"rock", 
@@ -94,8 +97,69 @@ def game_play():
 def driver():
     while not quit: 
       if  game_play() == "quit":
-          break;
+          break
     print('game end')
 
 
-driver()
+#TKINTER
+window =tk.Tk()
+computer_frame =tk.Frame(window, width=300, height= 200)
+center_frame = tk.Frame(window, width=300, height=200)
+player_frame = tk.Frame(window, width=300, height= 200)
+input = ' '
+window.geometry("800x500")
+window.title("Rock, Paper, Scissors")
+
+greeting = tk.Label(window, text = "Welcome, combatant!", font=('sans-serif, 20'))
+comp_label = tk.Label(computer_frame, text="Computer", padx= 100, pady=100)
+resolve = tk.Button(center_frame, text="Resolve")
+
+rock = tk.Radiobutton(player_frame, text="Rock", variable= input, value='rock')
+paper = tk.Radiobutton(player_frame, text="Paper", variable= input, value='paper')
+scissors = tk.Radiobutton(player_frame, text="Scissors", variable= input, value='scissors')
+lizard = tk.Radiobutton(player_frame, text="Lizard", variable= input, value='lizard')
+spock = tk.Radiobutton(player_frame, text="Spock", variable= input, value='spock')
+match input:
+    case "rock": 
+        if random.randint(1,10) == 10:
+                image_name = "therock.png"
+        else:
+                image_name = "rock.png"
+    case "scissors":
+        image_name = "scissors.png" 
+    case "paper":
+        image_name = "paper.png"
+    case "lizard":
+        image_name = "lizard.png"
+    case "spock":
+        image_name = "spock.png"
+
+# buttons={}
+
+# for row in range(5):
+#     for col in range(5):
+#         button_text = ['rock', 'paper', 'scissors', 'lizard', 'spock'][row]
+#         buttons[row] = buttons.get(row, {})
+#         buttons[row][col] = tk.Button(window, text=button_text, padx=20, pady=10,
+#                                      command=lambda r=row, c=col: on_button_click(r, c))
+#         buttons[row][col].grid(row=row, column=col)
+        
+
+computer_frame.grid(column=0, row=0)
+comp_label.grid(column= 0, row=2)
+
+center_frame.grid(column = 1, row = 0)
+resolve.grid(column=1, row=2, padx=40, sticky='nsew')
+
+player_frame.grid(column=2, row = 0)
+rock.grid(column=1, row=2)
+paper.grid(column=2, row=2)
+scissors.grid(column=3, row=2)
+lizard.grid(column=4, row=2)
+spock.grid(column=5, row=2)
+
+
+
+# greeting.pack()
+
+window.mainloop()
