@@ -202,9 +202,6 @@ player_label.grid(column=0, row=0)
 player1_image.grid(column=0,row=0, pady=10, padx=10)
 
 
-
-
-
 rock.bind('<Button-1>', set_input_rock)
 paper.bind('<Button-1>',set_input_paper)
 scissors.bind('<Button-1>', set_input_scissors)
