@@ -7,7 +7,8 @@ from PIL import ImageTk, Image
 class Help_object:
     def __init__(self, input1):
        self.input1 = input1
-    
+       self.comp_img = ""
+       self.oscillate = 0
 help_me = Help_object("")
 
 reference = {
@@ -75,8 +76,8 @@ def get_player_input():
 
 
 def get_computer_choice():
-     return random.choice(('rock', 'paper', 'scissors', 'lizard', 'spock'))
-
+     help_me.comp_img = random.choice(('rock', 'paper', 'scissors', 'lizard', 'spock'))
+     return help_me.comp_img
 def update_score(score1):
     match score1:
         case 'win':
@@ -87,21 +88,7 @@ def update_score(score1):
             score[2] = score[2]+ 1
 
 def get_score():
-    return "Wins: {}, Losses: {}, Ties: {}".format(str(score[0]), str(score[1]), str(score[2]))
-def game_play(event):
-    computer_choice = get_computer_choice()
-    comp_img = ImageTk.PhotoImage(Image.open(computer_choice))
-    comp_label.configure(image=comp_img)
-    comp_label.image = comp_img
-    game_check = check_winner(help_me.input1[:-4], computer_choice)
-    update_score(game_check[0])
-    score_label.configure(text=get_score())
-    score_label.text=get_score()
-    game_check_label.configure(text=game_check[1])
-    game_check_label.text=game_check[1]
-    # print(get_score())
-    # print(game_check[1])
-    
+    return "Your Score: Wins: {}, Losses: {}, Ties: {}".format(str(score[0]), str(score[1]), str(score[2]))
 
 def driver():
     while not quit: 
@@ -116,7 +103,7 @@ computer_frame =tk.Frame(window, width=300, height= 300)
 center_frame = tk.Frame(window, width=300, height=200)
 player_frame = tk.Frame(window, width=300, height= 200)
 input1 = ' '
-window.geometry("800x500")
+window.geometry("900x500")
 window.title("Rock, Paper, Scissors")
 image_name= "rock.png"
 greeting = tk.Label(window, text = "Welcome, combatant!", font=('sans-serif, 20'))
@@ -127,8 +114,49 @@ computer_label = tk.Label(computer_frame, text="Computer:", font=('sans-serif, 1
 player_label = tk.Label(player_frame, text="You:", font=('sans-serif, 16'))
 score_label = tk.Label(window, text="Your Score:", font=('sans-serif, 16'))
 game_check_label = tk.Label(window, text="  ", font=('sans-serif, 16'))
-play = tk.Button(center_frame, text="Play", padx= 15, pady=15, activeforeground='red', anchor='center',font=('sans-serif, 14'),bd=0)
-
+play = tk.Button(center_frame, text="Play", padx= 15, pady=15,  anchor='center',font=('sans-serif, 14'),bd=0)
+again = tk.Button(center_frame, text="Again?", padx= 15, pady=15,  anchor='center',font=('sans-serif, 14'),bd=0)
+def game_play(event):
+    if help_me.oscillate == 0:
+        help_me.oscillate = 1
+        print(help_me.oscillate)
+        get_computer_choice()
+        match help_me.comp_img:
+            case "rock":
+                comp_img = ImageTk.PhotoImage(Image.open("rock.png"))
+            case "paper":
+                comp_img = ImageTk.PhotoImage(Image.open("paper.png"))
+            case "scissors":
+                comp_img = ImageTk.PhotoImage(Image.open("scissors.jpg"))
+            case "spock":
+                comp_img = ImageTk.PhotoImage(Image.open("spock.png"))
+            case "lizard":
+                comp_img = ImageTk.PhotoImage(Image.open("lizard.png"))
+            case __:
+                comp_img = ImageTk.PhotoImage(Image.open("lizard.png"))
+        comp_label.configure(image=comp_img)
+        comp_label.image = comp_img
+        game_check = check_winner(help_me.input1[:-4], help_me.comp_img)
+        update_score(game_check[0])
+        score_label.configure(text=get_score())
+        score_label.text=get_score()
+        game_check_label.configure(text=game_check[1])
+        game_check_label.text=game_check[1]
+        
+        play.configure(text="Again?")
+        play.text = "Again?"
+        
+    else:
+        
+        help_me.oscillate = 0
+        comp_img = ImageTk.PhotoImage(Image.open("Blank-image.png"))
+        comp_label.configure(image=comp_img)
+        comp_label.image = comp_img
+        game_check_label.configure(text="")
+        game_check_label.text= ""
+        play.configure(text="Play")
+        play.text= "Play"
+        
 
 #FUNCTIONS PLEASE WORK 
 def select_graphic():
@@ -145,8 +173,8 @@ def select_graphic():
             img2 = ImageTk.PhotoImage(Image.open("scissors.jpg"))
         case "lizard.png":
             img2 = ImageTk.PhotoImage(Image.open("lizard.png"))
-        case "space.png":
-            img2 = ImageTk.PhotoImage(Image.open("space.png"))
+        case "spock.png":
+            img2 = ImageTk.PhotoImage(Image.open("spock.png"))
         case __:
             img2 = ImageTk.PhotoImage(Image.open("lizard.png"))
     player1_image.configure(image=img2)
@@ -162,7 +190,7 @@ def set_input_lizard(event):
     print(help_me.input1)
     select_graphic()
 def set_input_spock(event):
-    help_me.input1 = "space.png" 
+    help_me.input1 = "spock.png" 
     print(help_me.input1)
     select_graphic()
 def set_input_rock(event):
@@ -200,8 +228,8 @@ lizard.grid(column=0, row=15)
 spock.grid(column=0, row=16)
 player_label.grid(column=0, row=0)
 player1_image.grid(column=0,row=0, pady=10, padx=10)
-
-
+score_label.grid(column=2, row=2)
+game_check_label.grid(column=2, row = 3)
 
 
 
