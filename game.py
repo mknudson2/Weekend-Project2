@@ -118,8 +118,9 @@ window.geometry("800x500")
 window.title("Rock, Paper, Scissors")
 image_name= "rock.png"
 greeting = tk.Label(window, text = "Welcome, combatant!", font=('sans-serif, 20'))
-comp_label = tk.Label(computer_frame, text="Computer", padx= 100, pady=100)
-resolve = tk.Button(center_frame, text="Resolve")
+comp_label = tk.Label(computer_frame, text="Computer:", padx= 200, pady=100, background='red')
+player_label = tk.Label(player_frame, text="You:", font=('sans-serif, 16'))
+play = tk.Button(center_frame, text="Play", padx= 15, pady=15, activeforeground='red', anchor='center',font=('sans-serif, 14'),bd=0)
 
 
 #FUNCTIONS PLEASE WORK 
@@ -186,19 +187,22 @@ player1_image = tk.Label(window, image = img)
 #         buttons[row][col].grid(row=row, column=col)
         
 
+
 computer_frame.grid(column=2, row=0)
 comp_label.grid(column= 0, row=2)
 
-center_frame.grid(column = 1, row = 0)
-resolve.grid(column=1, row=2, padx=40, sticky='nsew')
+center_frame.grid(column =1, row = 0)
+play.grid(column=1, row=1, padx=(80,0))
 
-player_frame.grid(column=2, row = 0)
-rock.grid(column=2, row=2)
-paper.grid(column=2, row=3)
-scissors.grid(column=2, row=4)
-lizard.grid(column=2, row=5)
-spock.grid(column=2, row=6)
-player1_image.grid(column=0,row=0)
+player_frame.grid(column=0, row=11)
+rock.grid(column=0, row=12)
+paper.grid(column=0, row=13)
+scissors.grid(column=0, row=14)
+lizard.grid(column=0, row=15)
+spock.grid(column=0, row=16)
+player_label.grid(column=0, row=0)
+player1_image.grid(column=0,row=0, pady=10, padx=10)
+
 
 
 rock.bind('<Button-1>', set_input_rock)
