@@ -30,8 +30,6 @@ reference = {
 
 score = [0,0,0]
 
-quit = False
-
 def check_winner(player1,player2):
     rules = {'rock':{
                     'rock': ['tie', "Rock ties with rock."],
@@ -67,17 +65,11 @@ def check_winner(player1,player2):
     return rules[player1][player2]
 
 
-def get_player_input():
-    while True:
-       user_input = input('Enter your choice: [R]ock, [P]aper, [Sc]issors, [L]izard, [Sp]ock, [Q]uit, or [H]elp ').lower()
-       if user_input in reference:
-            return reference[user_input]
-       print('Please enter a valid choice')
-
 
 def get_computer_choice():
      help_me.comp_img = random.choice(('rock', 'paper', 'scissors', 'lizard', 'spock'))
      return help_me.comp_img
+
 def update_score(score1):
     match score1:
         case 'win':
@@ -109,13 +101,15 @@ image_name= "rock.png"
 greeting = tk.Label(window, text = "Welcome, combatant!", font=('sans-serif, 20'))
 comp_image_name = "Blank-image.png"
 comp_image = ImageTk.PhotoImage(Image.open(comp_image_name))
-comp_label = tk.Label(computer_frame, image=comp_image)
+computer_image_widget = tk.Label(computer_frame, image=comp_image)
 computer_label = tk.Label(computer_frame, text="Computer:", font=('sans-serif, 16'))
 player_label = tk.Label(player_frame, text="You:", font=('sans-serif, 16'))
 score_label = tk.Label(window, text="Your Score:", font=('sans-serif, 16'))
 game_check_label = tk.Label(window, text="  ", font=('sans-serif, 16'))
 play = tk.Button(center_frame, text="Play", padx= 15, pady=15,  anchor='center',font=('sans-serif, 14'),bd=0)
 again = tk.Button(center_frame, text="Again?", padx= 15, pady=15,  anchor='center',font=('sans-serif, 14'),bd=0)
+
+
 def game_play(event):
     if help_me.oscillate == 0:
         help_me.oscillate = 1
@@ -134,8 +128,8 @@ def game_play(event):
                 comp_img = ImageTk.PhotoImage(Image.open("lizard.png"))
             case __:
                 comp_img = ImageTk.PhotoImage(Image.open("lizard.png"))
-        comp_label.configure(image=comp_img)
-        comp_label.image = comp_img
+        computer_image_widget.configure(image=comp_img)
+        computer_image_widget.image = comp_img
         game_check = check_winner(help_me.input1[:-4], help_me.comp_img)
         update_score(game_check[0])
         score_label.configure(text=get_score())
@@ -150,8 +144,8 @@ def game_play(event):
         
         help_me.oscillate = 0
         comp_img = ImageTk.PhotoImage(Image.open("Blank-image.png"))
-        comp_label.configure(image=comp_img)
-        comp_label.image = comp_img
+        computer_image_widget.configure(image=comp_img)
+        computer_image_widget.image = comp_img
         game_check_label.configure(text="")
         game_check_label.text= ""
         play.configure(text="Play")
@@ -201,6 +195,9 @@ def set_input_paper(event):
     help_me.input1 = "paper.png"
     print(help_me.input1)
     select_graphic()
+
+
+
 rock = tk.Radiobutton(player_frame, text="Rock", variable= input1, value='rock')
 paper = tk.Radiobutton(player_frame, text="Paper", variable= input1, value='paper')
 scissors = tk.Radiobutton(player_frame, text="Scissors", variable= input1, value='scissors')
@@ -214,7 +211,7 @@ player1_image = tk.Label(window, image = img)
 
         
 computer_frame.grid(column=2, row=0)
-comp_label.grid(column= 0, row=2)
+computer_image_widget.grid(column= 0, row=2, pady=10, padx=10)
 computer_label.grid(column=0, row=3)
 
 center_frame.grid(column =1, row = 0)
