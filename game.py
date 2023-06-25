@@ -88,17 +88,19 @@ def update_score(score1):
 
 def get_score():
     return "Wins: {}, Losses: {}, Ties: {}".format(str(score[0]), str(score[1]), str(score[2]))
-def game_play():
-    player_input = get_player_input()
-    if player_input == 'quit':
-       quit = True
-       return 'quit'
+def game_play(event):
     computer_choice = get_computer_choice()
-    game_check = check_winner(player_input, computer_choice)
+    comp_img = ImageTk.PhotoImage(Image.open(computer_choice))
+    comp_label.configure(image=comp_img)
+    comp_label.image = comp_img
+    game_check = check_winner(help_me.input1[:-4], computer_choice)
     update_score(game_check[0])
-    print(get_score())
-    print(game_check[1])
-    print("Would you like to continue?")
+    score_label.configure(text=get_score())
+    score_label.text=get_score()
+    game_check_label.configure(text=game_check[1])
+    game_check_label.text=game_check[1]
+    # print(get_score())
+    # print(game_check[1])
     
 
 def driver():
@@ -110,7 +112,7 @@ def driver():
 
 #TKINTER
 window =tk.Tk()
-computer_frame =tk.Frame(window, width=300, height= 200)
+computer_frame =tk.Frame(window, width=300, height= 300)
 center_frame = tk.Frame(window, width=300, height=200)
 player_frame = tk.Frame(window, width=300, height= 200)
 input1 = ' '
@@ -118,8 +120,13 @@ window.geometry("800x500")
 window.title("Rock, Paper, Scissors")
 image_name= "rock.png"
 greeting = tk.Label(window, text = "Welcome, combatant!", font=('sans-serif, 20'))
-comp_label = tk.Label(computer_frame, text="Computer:", padx= 200, pady=100, background='red')
+comp_image_name = "Blank-image.png"
+comp_image = ImageTk.PhotoImage(Image.open(comp_image_name))
+comp_label = tk.Label(computer_frame, image=comp_image)
+computer_label = tk.Label(computer_frame, text="Computer:", font=('sans-serif, 16'))
 player_label = tk.Label(player_frame, text="You:", font=('sans-serif, 16'))
+score_label = tk.Label(window, text="Your Score:", font=('sans-serif, 16'))
+game_check_label = tk.Label(window, text="  ", font=('sans-serif, 16'))
 play = tk.Button(center_frame, text="Play", padx= 15, pady=15, activeforeground='red', anchor='center',font=('sans-serif, 14'),bd=0)
 
 
@@ -128,14 +135,14 @@ def select_graphic():
     print(help_me.input1)
     match help_me.input1:
         case "rock.png":
-            if random.randint(9) == 9:
-                img2 = ImageTk.PhotoImage(Image.open("rock.png"))
+            if random.randint(0,10) == 9:
+                img2 = ImageTk.PhotoImage(Image.open("therock.png"))
             else: 
-                 img2 = ImageTk.PhotoImage(Image.open("therock.png"))
+                 img2 = ImageTk.PhotoImage(Image.open("rock.png"))
         case "paper.png":
             img2 = ImageTk.PhotoImage(Image.open("paper.png"))
-        case "scissor.jpg":
-            img2 = ImageTk.PhotoImage(Image.open("scissor.jpg"))
+        case "scissors.jpg":
+            img2 = ImageTk.PhotoImage(Image.open("scissors.jpg"))
         case "lizard.png":
             img2 = ImageTk.PhotoImage(Image.open("lizard.png"))
         case "space.png":
@@ -147,7 +154,7 @@ def select_graphic():
     
 
 def set_input_scissors(event):
-    help_me.input1 = "scissor.jpg"
+    help_me.input1 = "scissors.jpg"
     print(help_me.input1)
     select_graphic()
 def set_input_lizard(event):
@@ -176,20 +183,11 @@ spock = tk.Radiobutton(player_frame, text="Spock", variable= input1, value='spoc
 #Image declaration
 img = ImageTk.PhotoImage(Image.open(image_name))
 player1_image = tk.Label(window, image = img)
-# buttons={}
 
-# for row in range(5):
-#     for col in range(5):
-#         button_text = ['rock', 'paper', 'scissors', 'lizard', 'spock'][row]
-#         buttons[row] = buttons.get(row, {})
-#         buttons[row][col] = tk.Button(window, text=button_text, padx=20, pady=10,
-#                                      command=lambda r=row, c=col: on_button_click(r, c))
-#         buttons[row][col].grid(row=row, column=col)
         
-
-
 computer_frame.grid(column=2, row=0)
 comp_label.grid(column= 0, row=2)
+computer_label.grid(column=0, row=3)
 
 center_frame.grid(column =1, row = 0)
 play.grid(column=1, row=1, padx=(80,0))
@@ -205,11 +203,15 @@ player1_image.grid(column=0,row=0, pady=10, padx=10)
 
 
 
+
+
 rock.bind('<Button-1>', set_input_rock)
 paper.bind('<Button-1>',set_input_paper)
 scissors.bind('<Button-1>', set_input_scissors)
 lizard.bind('<Button-1>', set_input_lizard )
 spock.bind('<Button-1>', set_input_spock)
+
+play.bind('<Button-1>', game_play)
 # greeting.pack()
 
 window.mainloop()
